@@ -16,7 +16,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
   return (
     <Card
       sx={{
@@ -67,7 +67,11 @@ const Post = ({ post }) => {
         <Button size="small" color="primary" onClick={() => {}}>
           <DeleteIcon fontSize="small" sx={{ mr: 0.5 }} /> Delete
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => setCurrentId(post._id)}
+        >
           <MoreHorizIcon fontSize="small" />
         </Button>
       </CardActions>

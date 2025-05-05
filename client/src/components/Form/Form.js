@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper, Box } from "@mui/material";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePosts } from "../../actions/posts";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -13,14 +13,28 @@ const Form = () => {
     selectedFile: "",
   });
   const dispatch = useDispatch();
+  const posts = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
+  useEffect(() => {
+    if (posts) {
+      setPostData(posts);
+    }
+  }, [posts]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePosts(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
+
     clear();
   };
 
   const clear = () => {
+    setCurrentId(null);
     setPostData({
       creator: "",
       title: "",
@@ -31,7 +45,7 @@ const Form = () => {
   };
 
   return (
-    <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
+    <Paper elevation={3} sx={{ p: 2 }}>
       <Box
         component="form"
         autoComplete="off"
@@ -44,7 +58,7 @@ const Form = () => {
         }}
       >
         <Typography variant="h6" align="center">
-          Create a Memory
+          {currentId ? `Editing` : `Creating`} a Memory
         </Typography>
 
         <TextField

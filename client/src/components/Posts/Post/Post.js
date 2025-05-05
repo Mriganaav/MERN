@@ -13,10 +13,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useDispatch } from "react-redux";
+import { deletePosts } from "../../../actions/posts";
 
 dayjs.extend(relativeTime);
 
 const Post = ({ post, setCurrentId }) => {
+  const dispatch = useDispatch();
   return (
     <Card
       sx={{
@@ -64,7 +67,11 @@ const Post = ({ post, setCurrentId }) => {
           <ThumbUpAltIcon fontSize="small" sx={{ mr: 0.5 }} /> Like{" "}
           {post.likeCount}
         </Button>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => dispatch(deletePosts(post._id))}
+        >
           <DeleteIcon fontSize="small" sx={{ mr: 0.5 }} /> Delete
         </Button>
         <Button

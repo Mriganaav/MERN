@@ -59,3 +59,23 @@ export const updatePosts = async (req, res) => {
       .json({ message: "Error updating post", error: error.message }); // 500 for server errors
   }
 };
+export const deletePosts = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send("Invalid post ID");
+  }
+
+  try {
+    const deletedPost = await PostMessage.findByIdAndDelete(id); // Update here
+
+    if (!deletedPost) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: error.message });
+  }
+};

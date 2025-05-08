@@ -24,6 +24,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   padding: "10px",
+  background: "linear-gradient(180deg, #6A1B9A 0%, #8E24AA 50%, #AB47BC 100%)",
+  color: "#ffffff",
 }));
 
 const StyledImage = styled("img")({
@@ -56,6 +58,7 @@ const App = () => {
               justifyContent="space-between"
               alignItems="flex-start"
               spacing={3}
+              direction={{ xs: "column-reverse", sm: "row" }}
             >
               <Grid item xs={12} sm={7}>
                 <Posts setCurrentId={setCurrentId} />

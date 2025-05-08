@@ -14,7 +14,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useDispatch } from "react-redux";
-import { deletePosts } from "../../../actions/posts";
+import { deletePosts, likePosts } from "../../../actions/posts";
 
 dayjs.extend(relativeTime);
 
@@ -63,7 +63,11 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => dispatch(likePosts(post._id))}
+        >
           <ThumbUpAltIcon fontSize="small" sx={{ mr: 0.5 }} /> Like{" "}
           {post.likeCount}
         </Button>

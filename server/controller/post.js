@@ -79,3 +79,20 @@ export const deletePosts = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const likePosts = async (req, res) => {
+  const { id } = req.params;
+  // const { userId } = req.body; // Assuming userId is sent in the request body
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send("Invalid post ID");
+  }
+
+  const post = await PostMessage.findById(id);
+  const updatedPost = await PostMessage.findByIdAndUpdate(
+    id,
+    { likeCount: post.likeCount + 1 }, // Use $addToSet to avoid duplicates
+    { new: true }
+  );
+  res.json(updatedPost);
+};
